@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>معلومات الإستخدام</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script>
+    function readablizeBytes(bytes) {
+      let limit = document.getElementById("limit");
+      let limitInfo = document.getElementById("limit-info");
+      // var s = ["bytes", "kb", "MB", "GB", "TB", "PB"];
+      var s = ["بايت", "كيلو بايت", "مجيا", "جيجا", "تيرا", "PB"];
+      var e = Math.floor(Math.log(bytes) / Math.log(1024));
+      return (limit.innerHTML =
+        (bytes / Math.pow(1024, Math.floor(e))).toFixed(2), 
+        limitInfo.innerHTML = s[e]);
+    }
+
+    function nameCard() {
+      let card = document.getElementById("card");
+      card.style.direction = "ltr"
+      card.innerHTML = card.innerHTML.slice(0 ,4) + "....";
+    }
+  </script>
+</head>
+
+<body>
+  <div class="login postion-center">
+    <form class="flex-center status" action="$(link-logout)" name="logout" onSubmit="openLogout()">
+      <nav>
+        <ul class="flex-center userPro">
+          <li class="icon exit">
+            <input class="btn" type="submit" value=""><img src="/img/out.svg" alt="">
+          </li>
+        </ul>
+      </nav>
+      <div class="flex-center raw" style="flex-direction: row-reverse;">
+        <div class="box flex-center info-user">
+          <p>رقم الكرت</p>
+          <div class="timeInfo flex-center">
+            <span class="box small" id="card">$(username)</span>
+            <script language="JavaScript">nameCard();</script>
+          </div>
+          <span></span>
+        </div>
+        <div class="box flex-center info-user">
+          <p>العنوان</p>
+          <span class="box small">$(ip)</span>
+        </div>
+      </div>
+      <div class="flex-center raw">
+        <div class="box flex-center info-user">
+          <p>اخرتحديث </p>
+          <div class="timeInfo flex-center">
+            <span class="box small" id="ref"></span>
+            <span id="ref-info"></span>
+          </div>
+        </div>
+        <div class="box flex-center info-user">
+          <p>التحميل المتبقي لديك</p>
+          <div class="timeInfo flex-center">
+            <span class="box small" id="limit"></span>
+            <span id="limit-info"></span>
+            <script language="JavaScript">readablizeBytes($(remain-bytes-total));</script>
+          </div>
+        </div>
+      </div>
+      <div class="box flex-center info-user timeLeft">
+        <p>الوقت المتبقي</p>
+        <span id="timeLeft" style="direction: ltr;"></span>
+        <div class="timeLeft flex-center">
+          <div class="timeInfo flex-center">
+            <span class="box small" id="today"></span>
+            <span id="today-info"></span>
+          </div>
+          <div class="timeInfo flex-center">
+            <span class="box small" id="hour"></span>
+            <span id="hour-info"></span>
+          </div>
+          <div class="timeInfo flex-center">
+            <span class="box small" id="minute"></span>
+            <span id="minute-info"></span>
+          </div>
+          <div class="timeInfo flex-center">
+            <span class="box small" id="second"></span>
+            <span id="second-info"></span>
+          </div>
+        </div>
+      </div>
+    </form>
+    <footer>
+      <ul class="flex-center box">
+        <div class="call flex-center">
+          <div class="call-services flex-center">
+            <li class="icon">
+              <a class="link" id="ca"><img src="/img/telephone.svg" alt=""></a>
+            </li>
+            <div class="in">
+              <p>حالة التواصل</p>
+              <span class=" available"></span>
+            </div>
+          </div>
+          <div class="call-services">
+            <div class="call-services flex-center">
+              <li class="icon">
+                <a class="link" id="wa"><img src="/img/whatsapp.svg" alt=""></a>
+              </li>
+              <div class="in">
+                <p>حالة التواصل</p>
+                <span class=" available"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ul>
+    </footer>
+  </div>
+  <script>
+    function openLogout() {
+      if (window.name != "hotspot_status") return true;
+      open("$(link-logout)");
+      window.close();
+      return false;
+    }
+    function refresh() {
+      let ref = "$(refresh-timeout)".replace("m", " دقيقة , ");
+      // let ref = "1m";
+      let refresh = document.getElementById("ref");
+      let refreshInfo = document.getElementById("ref-info")
+      let count = ref.split(",")
+      console.log(count[0].split(" ")[1])
+      refresh.innerHTML = count[0].split(" ")[0]
+      refreshInfo.innerHTML = `قبل ${count[0].split(" ")[1]}`
+    }
+    refresh()
+    function timeLeft() {
+      let timeleft = "$(session-time-left)".replace("w", " أسبوع , ").replace("d", " يوم , ").replace("h", " ساعة , ").replace("m", " دقيقة , ").replace("s", " تانية , ");
+      let count = timeleft.split(",")
+      let weekInfo = document.getElementById("week-info")
+      let today = document.getElementById("today")
+      let todayInfo = document.getElementById("today-info")
+      let hour = document.getElementById("hour")
+      let hourInfo = document.getElementById("hour-info")
+      let minute = document.getElementById("minute")
+      let minuteInfo = document.getElementById("minute-info")
+      let second = document.getElementById("second")
+      let secondInfo = document.getElementById("second-info")
+      for (let i = 0; i < count.length; i++) {
+        if (count[i].includes("يوم")) {
+          today.innerHTML = `${count[i].split(" ")[0]}  `;
+          todayInfo.innerHTML = `الايام`
+      console.log(count[i].split(" ")[0])
+        }
+        if (count[i].includes("ساعة")) {
+          hour.innerHTML = `${count[i].split(" ")[1]}`;
+          hourInfo.innerHTML = `الساعات`
+        }
+        if (count[i].includes("دقيقة")) {
+          minute.innerHTML = `${count[i].split(" ")[1]}`;
+          minuteInfo.innerHTML = `الدقائق`
+        }
+        if (count[i].includes("تانية")) {
+          second.innerHTML = `${count[i].split(" ")[1]}`;
+          secondInfo.innerHTML = `الثواني`
+        }
+    }
+  }
+
+    timeLeft()
+
+  </script>
+  <script src="/js/main.js"></script>
+  <script src="/js/editPage.js"></script>
+</body>
+
+</html>

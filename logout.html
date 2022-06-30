@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تم الخروج</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="login postion-center flex-center logout">
+    <div class="box flex-center" style="flex-direction: row; color:red">
+      تم تسجيل خروجك <h4>&#128532</h4>
+      
+    </div>
+    <form action="$(link-login)" name="login" onSubmit="openLogin()">
+     <div class="flex-center box">
+       <div class="head flex-center">
+        <h4>&#128525</h4>
+        <p>إعادة الدخول</p>
+       </div>
+      <input class="tbutton reload" type="submit" value="إعادة الدخول">
+      <span class="info-box">إعادة تسجيل الدخول بالكرت الحالي</span>
+     </div>
+  </form>
+  <form action="$(link-login)" name="login" onSubmit="openLoginAndClear()">
+      <div class="flex-center box">
+        <div class="head flex-center">
+          <h4>&#129297</h4>
+          <p>الدخول بكرت آخر !</p>
+        </div>
+        <input class="tbutton reload" type="submit" value="الدخول بكرت آخر !">
+        <span class="info-box">مسح بيانات الكرت الحالي من قائمة الحفظ والتسجيل بكرت جديد</span>
+      </div>
+  </form>
+  <footer>
+    <ul class="flex-center box">
+      <div class="call flex-center">
+        <div class="call-services flex-center">
+          <li class="icon">
+            <a class="link" id="ca"><img src="/img/telephone.svg" alt=""></a>
+          </li>
+          <div class="in">
+            <p>حالة التواصل</p>
+            <span  class=" available"></span>
+          </div>
+        </div>
+      </div>
+    </ul>
+  </footer>
+  </div>
+  <script src="/js/main.js"></script>
+  <script src="/js/logout.js"></script>
+  <script src="js/hotCookie.min.js"></script>
+  <script src="/js/editPage.js"></script>
+</body>
+</html>

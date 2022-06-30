@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <title>تسجيل الدخول</title>
+</head>
+
+<body onload="init()">
+
+  $(if chap-id)
+  <form name="sendin" action="$(link-login-only)" method="post" style="display:none">
+    <input type="hidden" name="username" />
+    <input type="hidden" name="password" />
+    <input type="hidden" name="dst" value="$(link-orig)" />
+    <input type="hidden" name="popup" value="true" />
+  </form>
+
+  <script src="md5.js"></script>
+  <script>
+    function doLogin(typeValue) {
+      if (typeValue === 'username') {
+        document.sendin.username.value = document.login.username.value;
+        document.sendin.password.value = hexMD5('$(chap-id)' + document.login.username.value + '$(chap-challenge)');
+        document.sendin.submit();
+        return false;
+      } else {
+        document.sendin.username.value = document.login.username.value;
+        document.sendin.password.value = hexMD5('$(chap-id)' + document.login.password.value + '$(chap-challenge)');
+        document.sendin.submit();
+        return false;
+      }
+    }
+
+
+  </script>
+  $(endif)
+  <div class="login postion-center flex-center">
+    <nav>
+      <ul class="flex-center">
+        <li class="icon" data-color="light-theme" id="icon">
+          <img src="img/sun.svg" alt="">
+        </li>
+        <li class="icon" id="switch">
+          <img class="active" id="price" src="img/dollar.svg" alt="">
+          <img id="home" src="img/home.svg" alt="">
+        </li>
+      </ul>
+    </nav>
+    <div class="inside flex-center">
+      <div class="login-card flex-center">
+        <div class="ramadan-info flex-center">
+          <div class="day box flex-center">
+            <img src="img/clock-solid.svg" alt="">
+            <span id="watch"></span>
+            <span>الساعة الان <span id="timeAzan"></span></span>
+          </div>
+          <div class="time box flex-center">
+            <img src="img/dates.svg" alt="">
+            <span id="month"></span>
+            <span id="day"></span>
+          </div>
+        </div>
+        <div class="name flex-center" id="title">
+        </div>
+        <div class=" error">
+          <div style=clear:both></div>
+          <div class="parant-error  flex-center">$(if error)
+            <div class="error-msg box">
+              <script>
+                var error = "$(error)";
+                "simultaneous session limit reached" == error ? document.write("المعذرة ، هذا الحساب مستخدم حالياً في جهاز آخر . ") :
+                  "invalid password" == error ? document.write("تاكد من كتابة كلمة المرور بشكل صحيح") :
+                    "uptime limit reached" == error ? document.write("عذراً لقد انتهى الوقت المتاح لك..") :
+                      "invalid username or password" == error ? document.write(" تسجيل الدخول خاطئ ") :
+                        "Expired prepaid card!" == error ? document.write("لقد انتهت صلاحية هذا الكرت") :
+                          "You are already logged in - access denied" == error ? document.write("لقد قمت بتسجيل الدخول بالفعل - تم رفض الوصول") :
+                            "invalid Calling-Station-Id" == error ? document.write("هذا الحساب مقترن بجهاز آخر، لمزيد من المعلومات يرجى الاتصال بخدمة العملاء") :
+                              -1 != error.search("traffic limit") ? document.write("لقد انتهى رصيد تحميل هذا الحساب") :
+                                -1 != error.search("no valid profile found") ? document.write("لم يتم العثور على ملف العروض الخاص بالكرت .") :
+                                  -1 != error.search("no more sessions are allowe") ? document.write("هذا الحساب موجود حالياً .. ولا يسمح بالدخول بنفس الحساب من جهازين مختلفين") :
+                                    -1 != error.search("uptime limit") ? document.write("لقد انتهى رصيد هذا الحساب") :
+                                      - 1 != error.search("not allowed to log in from this MAC address") ? document.write("هذا الحساب خاص بجهاز آخر .. لا تستطيع الدخول به من جهازك") :
+                                        -1 != error.search("not found") ? document.write("لقد ادخلت اسم المستخدم بطريقة غير صحيحة، الرجاء المحاولة مرة اخرى ") :
+                                          -1 != error.search("responding") ? document.write("هناك مشكلة في النظام النظام لايستجيب .. يرجى الإتصال بنا لإصلاح المشكلة حالاً") :
+                                            document.write("$(error)<br />")
+              </script>
+            </div>
+            $(endif)
+          </div>
+        </div>
+        <form class="flex-center" name="login" action="$(link-login-only)" method="post" $(if chap-id)
+          onsubmit="return doLogin()" $(endif)>
+          <input type="hidden" name="dst" value="$(link-orig)" />
+          <input type="hidden" name="popup" value="true" />
+          <div class="inputCard flex-center">
+            <input type="number" class="input" name="username" id=uname onkeyup='cleanUps(event,"username")'
+              placeholder="رمز الدخول" username-field>
+            <li class="icon">
+              <img src="img/user.svg" alt="">
+            </li>
+          </div>
+          <div class="inputCard flex-center">
+            <input type="number" class="input" name="password" id=paswd onkeyup='cleanUps(event,"password")'
+              placeholder="كلمه المرور" password-field>
+            <li class="icon" id="icon-paswd">
+              <img src="img/password.svg" alt="">
+            </li>
+          </div>
+          <div class="checkbox flex-center">
+            <label for="remember">حفظ الكرت</label>
+            <input type="checkbox" id=remember name=remember checked used>
+          </div>
+
+          <input class="tbutton" type="submit" onclick='rem();' value="دخول">
+        </form>
+
+      </div>
+      <div class="pricing flex-center" id="pri">
+        <div class="name">
+          الأســـعار
+        </div>
+        <div class="name buying flex-center">
+          نقاط البيــع
+          <li class="icon" id="buying">
+            <img src="img/buying.svg" alt="">
+          </li>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <ul class="flex-center box">
+        <div class="call flex-center">
+          <div class="call-services flex-center">
+            <li class="icon">
+              <a class="link" id="ca"><img src="img/telephone.svg" alt=""></a>
+            </li>
+            <div class="in">
+              <p>حالة التواصل</p>
+              <span class=" available"></span>
+            </div>
+          </div>
+        </div>
+      </ul>
+    </footer>
+  </div>
+  <script type="text/javascript">
+    let loginError = "$(error)"
+  </script>
+  <script src="js/main.js"></script>
+  <script src="js/login.js"></script>
+  <script src="js/hotCookie.min.js"></script>
+  <script src="js/editPage.js"></script>
+</body>
+
+</html>
